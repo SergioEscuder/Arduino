@@ -1,3 +1,8 @@
+Type into Serial input box: @1255;3488;56;22;45#
+
+Output...
+
+
 Receiving from Serial
 Clean variables
 @Start character received.
