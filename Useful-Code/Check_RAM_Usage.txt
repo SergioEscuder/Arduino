@@ -1,0 +1,43 @@
+http://antanas.veiverys.com/arduino-ram-usage-analysis/
+
+
+First, enable compiler verbose messages in the Arduino IDE, as you need need to see where the built binaries are stored (on my system, /tmp/build*** directory is used)
+
+
+~/Projects/arduino-1.0.1/hardware/tools/avr/bin$ avr-objdump -t -j .bss /tmp/build582139005597328143.tmp/controller.cpp.elf
+/tmp/build582139005597328143.tmp/controller.cpp.elf:     file format elf32-avr
+ 
+SYMBOL TABLE:
+008003c8 l    d  .bss    00000000 .bss
+0080041e l     O .bss    00000001 timer0_fract
+00800416 g     O .bss    00000004 timer0_overflow_count
+0080041a g     O .bss    00000004 timer0_millis
+00800406 g     O .bss    00000008 keyCounters
+008004c6 g       .bss    00000000 __bss_end
+008003c8 g     O .bss    0000003e SCmd
+0080041f g     O .bss    00000044 rx_buffer
+00800463 g     O .bss    00000044 tx_buffer
+008004a7 g     O .bss    0000001f Serial
+008003c8 g       .bss    00000000 __bss_start
+0080040e g     O .bss    00000008 startup_values
+
+
+
+
+~/Projects/arduino-1.0.1/hardware/tools/avr/bin$ avr-size /tmp/build582139005597328143.tmp/controller.cpp.elf -C --mcu=atmega168p
+ 
+AVR Memory Usage
+----------------
+Device: atmega168p
+ 
+Program:    5992 bytes (36.6% Full)
+(.text + .data + .bootloader)
+ 
+Data:        358 bytes (35.0% Full)
+(.data + .bss + .noinit)
+
+
+
+Replace atmega168p with your MCU model
+
+
