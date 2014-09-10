@@ -6,14 +6,6 @@ void Read_Parse_Serial()
     if (Serial.available()) {
       Serial.println(F("\nReceiving from Serial"));
       
-      
-      Serial.println(F("Clean variables"));
-        for (int i = 0; i < 10; i = i + 1) {  current_values[i] = 0; }        //memset( &current_values, 0, 10 );
-        current_value_digits_counter = 0;
-        valuesPos = 0;
-        // memset( &inString, 0, 32 ); //clear inString memory
-         
-        
     // Keep reading all incoming data
     while(Serial.available()){
       //***************************** //
@@ -28,6 +20,15 @@ void Read_Parse_Serial()
       if (c == OPEN_CHAR ) {
         if (DEBUG) Serial.println(F("Start character received."));
         startRead = true; //Ready to start reading the part
+        
+        // Save status of previous_values array
+        // Transfer values from current array to 'previous' for next loop comparison
+        for (byte i = 0; i < 10; i = i + 1) { previous_values[i] = current_values[i]; }
+
+        Serial.println(F("Clean variables"));
+        for (int i = 0; i < 10; i = i + 1) {  current_values[i] = 0; }        //memset( &current_values, 0, 10 );
+        current_value_digits_counter = 0;
+        valuesPos = 0;
       // ******************************************** If we receive the starting character "#", set flag ********************************************
         
         
@@ -77,8 +78,6 @@ void Read_Parse_Serial()
          //Print_values_array();
          }
       // ******************************************** If we have arrived to the end character ********************************************
- 
- 
  
       }
     } // While serial
